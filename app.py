@@ -6,12 +6,8 @@ from peewee import *
 
 url = "https://rapidapi.p.rapidapi.com/v1/search"
 
-headers = {
-    'x-rapidapi-host': "newscatcher.p.rapidapi.com",
-    'x-rapidapi-key': "d6206439ddmsh11ea8fcac12d762p19a85bjsncff8122bfe9c"
-    }
-    
-app = Flask(__name__)
+
+app = Flask(__name__, template_folder='template')
 
 @app.route('/',methods = ['GET', 'POST', 'DELETE'])
 def get_results():
