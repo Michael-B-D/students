@@ -11,7 +11,7 @@ headers = {
     'x-rapidapi-key': "d6206439ddmsh11ea8fcac12d762p19a85bjsncff8122bfe9c"
     }
     
-app = Flask(__name__, static_folder="Templates", static_url_path="")
+app = Flask(__name__)
 
 @app.route('/',methods = ['GET', 'POST', 'DELETE'])
 def get_results():
