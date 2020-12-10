@@ -17,9 +17,13 @@ app = Flask(__name__, static_folder="Templates", static_url_path="")
 def get_results():
     if request.method == 'GET':
         stu = Student.select().first()
+        if not stu:
+            name = 'no users'
+        else:
+            name = stu.name
         return render_template(
                 'base.html',
-                student_name = stu.name)
+                student_name = name)
     if request.method == 'POST':
         data = request.form
         st = Student.create(name=data['student_name'])
@@ -31,8 +35,9 @@ def get_results():
 
 
 
-pg_db = PostgresqlDatabase('myschool', user='postgres', password='mhbd1996',
-                           host='localhost', port=5432)
+# pg_db = PostgresqlDatabase('myschool', user='postgres', password='mhbd1996',
+#                            host='localhost', port=5432)
+pg_db = SqliteDatabase('test.db')
 
 
 class BaseModel(Model):
@@ -48,7 +53,8 @@ class Student(BaseModel):
     # economic_status_id = ForeignKeyField(Economic_status, 'Students')
 
 with pg_db.connection_context():
-    pg_db.create_tables([Student])
+    pg_db.create_tables([Student], safe=True)
+    
 
 
 # class Family_status(Model):
@@ -132,9 +138,9 @@ class Meta:
     #         )
     #         # if key error puse the relvant keys to the res
             
-
+if __name__ == '__main__':
+    app.run(threaded=True, port=5000)
             
-app.run(host= '0.0.0.0', debug=True)
 
             # <!-- <p class="all-hits">Total {{filter_results["total_hits"]}} Results:</p> -->
         # <!-- <p class="page-num">This page number-{{filter_results['page']}} from-{{filter_results["total_pages"]}}, click <a href="?free_text={{free_text}}&page={{filter_results['page']+1}}">here</a> to the next page!</p> -->
