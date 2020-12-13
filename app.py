@@ -15,7 +15,7 @@ def get_results():
         else:
             name = stu.name
         return render_template(
-                'base.html',
+                'base.j2',
                 student_name = name)
     if request.method == 'POST':
         data = request.form
@@ -28,15 +28,16 @@ def get_results():
         st_pro = Profession.select().where(Profession.profession == pro_to_insert).get()
         pro = Students_professions.create(student_id=st.student_id, profession_id=st_pro.profession_id)
         # stu = (Students.select()
-        #         .join(Students_professions).join(Profession)
+        #         .join(Students_professions, on=(Students_professions.student_id==Students.student_id))
+        #         .join(Profession, on=(Students_professions.profession_id==Profession.profession_id))
         #         .switch(Students)
-        #         .join(Classrooms)
-        #         .where(Students.student_id == st.student_id))
+        #         .join(Classrooms, on=(Classrooms.class_id==Students.classroom_id))
+        #         .where(Students.name == student_name))
         res = {'name':st.name,
          'class':st_class.class_name,
           'profession':st_pro.profession}
         return render_template(
-                'base.html',
+                'base.j2',
                 student_name=res['name'],
                 student_class=res['class'],
                 student_profession=res['profession']

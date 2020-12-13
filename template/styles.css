@@ -1,0 +1,13 @@
+.form-control{
+    width: 30%;
+    display: inline;
+}
+
+#main-free-search{
+    display: contents;
+}
+
+.logo{
+    width: 130px;
+    height: 90px;
+}
